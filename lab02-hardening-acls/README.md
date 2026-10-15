@@ -17,7 +17,7 @@ Este laboratório foca na aplicação de práticas recomendadas de segurança de
 ---
 
 ## 📐 Topologia da Rede
-*(Adicione a imagem da topologia aqui: `![Topologia do Lab 02](topologia.png)`)*
+<img width="866" height="609" alt="image" src="https://github.com/user-attachments/assets/192177f5-06d7-4524-b57a-93df12d9a947" />
 
 - **SW-Access:** Switch de acesso Catalyst 2960 aplicando políticas de Port-Security e SSH.
 - **R1-Core:** Roteador de borda atuando como gateway e aplicando controle de acesso (ACLs).
