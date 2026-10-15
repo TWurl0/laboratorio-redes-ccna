@@ -1,5 +1,4 @@
-## Laboratório-redes-CCNA ##
-_Repositório dedicado para laboratórios práticos referente ao CCNA_
+## LAB01-INFRA-CONPORATIVO ##
 
 
 # Objetivo
@@ -58,12 +57,12 @@ Para viabilizar a comunicação entre VLANs, a interface física foi subdividida
 
 ```cisco
 ! Configuração da Sub-interface VLAN 10 na Matriz
-interface GigabitEthernet0/0/0.10
+interface GigabitEthernet0/0.10
  encapsulation dot1Q 10
  ip address 192.168.10.1 255.255.255.0
  ip helper-address 192.168.20.10
 !
-interface GigabitEthernet0/0/0.20
+interface GigabitEthernet0/0.20
  encapsulation dot1Q 20
  ip address 192.168.20.1 255.255.255.0
 ```
@@ -85,7 +84,7 @@ interface GigabitEthernet0/0/0.20
 
 **Causa:** O tráfego de broadcast do DHCP foi descartado pelo Roteador na fronteira da VLAN.
 
-**Solução:** Configurado o comando ip helper-address 192.168.20.10 na sub-interface Gi0/0/0.10, convertendo a requisição DHCP de Broadcast para Unicast em direção ao servidor.
+**Solução:** Configurado o comando ip helper-address 192.168.20.10 na sub-interface Gi0/0.10, convertendo a requisição DHCP de Broadcast para Unicast em direção ao servidor.
 
 
 ## Aprendizados
