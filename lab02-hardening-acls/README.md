@@ -31,8 +31,8 @@ Este laboratório foca na aplicação de práticas recomendadas de segurança de
 | Dispositivo | Interface | Endereço IP | Máscara | VLAN / Função |
 | :--- | :--- | :--- | :--- | :--- |
 | **SW-Access** | SVI Vlan 99 | 192.168.99.2 | 255.255.255.0 | Gerenciamento (Management) |
-| **R1-Core** | Gi0/0/0.99 | 192.168.99.1 | 255.255.255.0 | Gateway VLAN 99 (Gerência) |
-| **R1-Core** | Gi0/0/0.20 | 192.168.20.1 | 255.255.255.0 | Gateway VLAN 20 (TI) |
+| **R1-Core** | Gi0/0.99 | 192.168.99.1 | 255.255.255.0 | Gateway VLAN 99 (Gerência) |
+| **R1-Core** | Gi0/0.20 | 192.168.20.1 | 255.255.255.0 | Gateway VLAN 20 (TI) |
 | **PC-Admin** | Fa0/1 | 192.168.20.50 | 255.255.255.0 | Estação do Administrador (TI) |
 | **PC-User** | Fa0/1 | 192.168.10.50 | 255.255.255.0 | Usuário Padrão (Vendas) |
 
