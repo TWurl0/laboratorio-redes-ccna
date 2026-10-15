@@ -135,11 +135,4 @@ interface FastEthernet0/1
 ---
 
 ## 📋 Estado do Projeto
-
-* [x] Documentação e arquitetura de segurança definidas.
-* [ ] Implementação da topologia e testes no Cisco Packet Tracer (`.pkt`).
-* [ ] Upload da imagem do diagrama (`topologia.png`) e do arquivo simulado.
-
-Quando estiver pronto, podemos ir para a montagem prática da topologia no Cisco Packet Tracer!
-
-```
+_Em andamento_
