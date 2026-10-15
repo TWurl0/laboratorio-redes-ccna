@@ -50,20 +50,83 @@ A rede utiliza o bloco privado `192.168.0.0/16` para as LANs e `10.0.0.0/30` par
 
 
 ## ⚙️ Implementação das Configurações
-
 ### 1. Configuração de Trunking e Inter-VLAN (R1-HQ e SW-HQ)
 Para viabilizar a comunicação entre VLANs, a interface física foi subdividida em sub-interfaces lógicas atreladas ao encapsulamento 802.1Q:
 
 ```cisco
-! Configuração da Sub-interface VLAN 10 na Matriz
+! Configuração das Sub-interfaces e DHCP Relay no R1-HQ
 interface GigabitEthernet0/0.10
  encapsulation dot1Q 10
  ip address 192.168.10.1 255.255.255.0
  ip helper-address 192.168.20.10
+ ip nat inside
 !
 interface GigabitEthernet0/0.20
  encapsulation dot1Q 20
  ip address 192.168.20.1 255.255.255.0
+ ip nat inside
+!
+interface GigabitEthernet0/0
+ no shutdown
+
+ ```
+### 2. Configuração de Roteamento Dinâmico OSPF (Area 0)
+Interconexão entre a Matriz (R1-HQ) e a Filial (R2-Branch) via OSPF Single Area com anúncio de rota padrão para a borda:
+
+```Cisco CLI
+! Configuração OSPF no R1-HQ (Matriz)
+router ospf 1
+ router-id 1.1.1.1
+ network 192.168.10.0 0.0.0.255 area 0
+ network 192.168.20.0 0.0.0.255 area 0
+ network 10.0.0.0 0.0.0.3 area 0
+ default-information originate
+
+! Configuração OSPF no R2-Branch (Filial)
+router ospf 1
+ router-id 2.2.2.2
+ network 192.168.30.0 0.0.0.255 area 0
+ network 10.0.0.0 0.0.0.3 area 0
+
+ ```
+### 3. Tradução de Endereços de Borda (NAT/PAT Overload)
+Mapeamento de todos os endereços privados internos (192.168.0.0/16) para o IP público de saída na interface com o provedor simulado:
+
+```Cisco CLI
+! Definição da Access List de tráfego interno elegível para NAT
+access-list 1 permit 192.168.0.0 0.0.255.255
+
+! Aplicação do PAT Overload na interface WAN/ISP
+interface GigabitEthernet0/2
+ ip address 200.100.10.2 255.255.255.252
+ ip nat outside
+ no shutdown
+
+ip nat inside source list 1 interface GigabitEthernet0/2 overload
+ip route 0.0.0.0 0.0.0.0 200.100.10.1
+
+```
+
+### 4. Switching e Ajustes de Camada 2 (SW-HQ)
+Criação de VLANs e entroncamento Trunk 802.1Q permitindo a passagem do tráfego das redes de Vendas e TI:
+
+```Cisco CLI
+vlan 10
+ name Vendas
+vlan 20
+ name TI
+
+interface FastEthernet0/1
+ switchport mode access
+ switchport access vlan 10
+
+interface FastEthernet0/2
+ switchport mode access
+ switchport access vlan 20
+
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20
 ```
 
 ## ✅ Testes e Validação
@@ -84,7 +147,7 @@ interface GigabitEthernet0/0.20
 **Solução:** Configurado o comando ip helper-address 192.168.20.10 na sub-interface Gi0/0.10, convertendo a requisição DHCP de Broadcast para Unicast em direção ao servidor.
 
 
-## Aprendizados
+## 📚 Aprendizados
 
 Consolidação do funcionamento do DHCP Relay e conversão de pacotes broadcast para unicast através de roteadores.
 
@@ -92,7 +155,7 @@ Ajuste e validação de NAT/PAT de borda combinados com a rota default para saí
 
 Importância do Router-on-a-Stick para isolar e controlar a comunicação de segundo nível (Camada 2) antes do encaminhamento de Camada 3.
 
-## Estado do projeto
+## 📋 Estado do projeto
 Concluído!
 
 
