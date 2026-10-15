@@ -1,8 +1,8 @@
-## LAB01-INFRA-CONPORATIVO ##
+# 🛡️ Laboratório 01: 
+_Lab01-infra-corporativo_
 
 
-# Objetivo
-
+## 🎯 Objetivos Técnicos
 O objetivo deste laboratório é projetar e configurar uma infraestrutura de rede funcional que garanta:
 - Redundância/Spanning Tree (STP) básica para evitar loops em links redundantes.
 - Segmentação de tráfego local via VLANs (Vendas, TI e Gerência).
@@ -14,8 +14,7 @@ O objetivo deste laboratório é projetar e configurar uma infraestrutura de red
 - Acesso Remoto Seguro (SSH) e Port-Security nos Switches (para demonstrar boas práticas de hardening).
 
 
-## Topologia
-
+## 📐 Topologia da Rede
 A rede é estruturada em dois sites principais (Matriz e Filial) interconectados por um link serial/Ethernet ponto-a-ponto, com um ponto de saída centralizado para a Internet simulada (ISP).
 
 - **Matriz (HQ):** Roteador R1-HQ conectado ao Switch principal SW-HQ via link Trunk (802.1Q). Atende às VLANs de Vendas e TI.
@@ -26,7 +25,7 @@ A rede é estruturada em dois sites principais (Matriz e Filial) interconectados
 <img width="1321" height="743" alt="image" src="https://github.com/user-attachments/assets/3c7b5401-1673-4a44-b0aa-e0791aea1117" />
 
 
-## Endereçamento IP
+## 📊 Tabela de Endereçamento e VLANs
 
 A rede utiliza o bloco privado `192.168.0.0/16` para as LANs e `10.0.0.0/30` para a interconexão WAN.
 
@@ -50,7 +49,7 @@ A rede utiliza o bloco privado `192.168.0.0/16` para as LANs e `10.0.0.0/30` par
 - **Segurança:** ACLs Estendidas e Padrão para filtragem de tráfego.
 
 
-## Implementação
+## ⚙️ Implementação das Configurações
 
 ### 1. Configuração de Trunking e Inter-VLAN (R1-HQ e SW-HQ)
 Para viabilizar a comunicação entre VLANs, a interface física foi subdividida em sub-interfaces lógicas atreladas ao encapsulamento 802.1Q:
@@ -67,8 +66,7 @@ interface GigabitEthernet0/0.20
  ip address 192.168.20.1 255.255.255.0
 ```
 
-## Testes e validação
-
+## ✅ Testes e Validação
 - [x] Conectividade Local e Remota: `ping` bem-sucedido entre estações da VLAN 10 (Vendas) e VLAN 30 (Filial).
 
 - [x] Concessão de IP Dinâmico: Verificação do recebimento de IP via DHCP nos clientes da VLAN 10 a partir do servidor localizado na VLAN 20.
@@ -78,8 +76,7 @@ interface GigabitEthernet0/0.20
 - [x] NAT Operacional: Validação da tradução de endereços via `show ip nat translations` durante acessos à Internet simulada.
 
 
-## Problemas e soluções
-
+## 🛠️ Problemas e Soluções
 **Sintoma:** Dispositivos da VLAN 10 não recebiam IP dinâmico do servidor DHCP na VLAN 20.
 
 **Causa:** O tráfego de broadcast do DHCP foi descartado pelo Roteador na fronteira da VLAN.
