@@ -1,4 +1,5 @@
-# 🌐 Laboratório 03: NAT/PAT, Borda de Rede e DMZ (CCNA 200-301)
+# 🌐 Laboratório 03: 
+_NAT/PAT, Borda de Rede e DMZ (CCNA 200-301)_
 
 ## 📌 Visão Geral
 Este laboratório aborda a configuração da borda corporativa (*Enterprise Edge*), focando no esgotamento do IPv4 através de técnicas avançadas de **NAT (Static NAT, Dynamic NAT e PAT Overload)**, integração com um Provedor de Serviços (ISP) simulado via **Rota Padrão Estática** e isolamento de serviços públicos em uma zona desmilitarizada (**DMZ**).
@@ -88,21 +89,27 @@ ip route 0.0.0.0 0.0.0.0 203.0.113.1
 ip route 203.0.113.10 255.255.255.255 203.0.113.2
 ```
 
-✅ Testes e Validação
+---
+
+## ✅ Testes e Validação
 - [x] Acesso Externo à DMZ (Static NAT): O host Client-External acessou com sucesso a página Web digitando o IP público http://203.0.113.10 no navegador.
 
 - [x] Navegação LAN para Internet (PAT): O PC-LAN realizou pings e conexões com o servidor 8.8.8.8 na Internet simulada.
 
 - [x] Inspeção de Tabela NAT: Comando show ip nat translations executado no R1-EDGE confirmando entradas estáticas de DMZ e dinâmicas de PAT com portas atribuídas.
 
-🔧 Problemas e Soluções
+---
+
+## 🔧 Problemas e Soluções
 Sintoma: O cliente externo na Internet não conseguia abrir a página web pelo IP público 203.0.113.10.
 
 Causa: O roteador do ISP (R-ISP) não sabia para onde encaminhar os pacotes destinados ao IP público secundário de NAT.
 
 Solução: Adicionada uma rota estática no R-ISP apontando o IP público 203.0.113.10/32 com next-hop na interface WAN do R1-EDGE (203.0.113.2).
 
-📚 Aprendizados
+---
+
+## 📚 Aprendizados
 Diferença prática entre Static NAT (para publicar serviços em DMZ) e PAT Overload (para economizar endereços IPv4 na navegação de estações).
 
 Entendimento de rotas de retorno em cenários de NAT de borda com Provedores de Serviço.
