@@ -1,4 +1,4 @@
-# 🛡️ Laboratório 01: 
+# 🌐 Laboratório 01: 
 _Lab01-infra-corporativo_
 
 
