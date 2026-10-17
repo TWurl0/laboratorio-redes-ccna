@@ -51,7 +51,7 @@ Este laboratório aborda a configuração da borda corporativa (*Enterprise Edge
 
 ## ⚙️ Implementação das Configurações de Segurança
 
-### 1. Definição de Interfaces NAT Inside/Outside (R1-EDGE)
+1. Definição de Interfaces NAT Inside/Outside (R1-EDGE)
 Mapeamento do domínio interno (LAN e DMZ) e externo (Link ISP):
 
 ```cisco
@@ -69,19 +69,26 @@ interface GigabitEthernet0/1
  ip address 203.0.113.2 255.255.255.252
  ip nat outside
  no shutdown
+ ```
+
+
 2. Configuração de NAT Estático para o Servidor Web (DMZ)
 Publicação do IP privado do servidor DMZ (192.168.50.10) no IP público secundário (203.0.113.10):
-
+``
+```
 Cisco CLI
 ip nat inside source static 192.168.50.10 203.0.113.10
+```
+``
 3. Configuração de PAT Overload para a LAN
 Mapeamento de todos os hosts privados internos para o IP da interface pública de saída:
-
+```
 Cisco CLI
 access-list 1 permit 192.168.10.0 0.0.0.255
 ip nat inside source list 1 interface GigabitEthernet0/1 overload
+```
 4. Rota Padrão de Borda e Roteamento ISP
-Cisco CLI
+```Cisco CLI
 ! Rota default em direção ao ISP
 ip route 0.0.0.0 0.0.0.0 203.0.113.1
 
@@ -116,5 +123,5 @@ Entendimento de rotas de retorno em cenários de NAT de borda com Provedores de 
 
 Utilização do comando show ip nat translations para monitorar sessões ativas e diagnosticar falhas de conectividade.
 
-🚀 Estado do Projeto
-_Em andamento_
+## 🚀 Estado do Projeto
+_Concluído_
